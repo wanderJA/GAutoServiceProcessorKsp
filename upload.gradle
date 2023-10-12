@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 ext {
     plugin_groupId = 'com.gwee.service'
     plugin_artifactId = 'ksp'
-    plugin_version = '1.0.0'
+    plugin_version = '1.0.1'
     local = false //true-上传到本地  false-上传到笔者的 github package（接入方无法使用）
 }
 
