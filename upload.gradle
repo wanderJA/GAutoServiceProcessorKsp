@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 ext {
     plugin_groupId = 'com.gwee.service'
     plugin_artifactId = 'ksp'
-    plugin_version = '1.0.1'
+    plugin_version = '1.1.0'
     local = false //true-上传到本地  false-上传到笔者的 github package（接入方无法使用）
 }
 
@@ -17,8 +17,8 @@ def sourcesJar = task("sourcesJar", type: Jar) {
     from sourceSets.main.kotlin
 }
 // 读取github.properties文件里的授权信息，不要把这个文件push到GitHub
-//def githubProperties = new Properties()
-//githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 
 // 因为用于定义发布类型的components是在afterEvaluate阶段被创建的，所以必须把发布配置写在project.afterEvaluate {}代码块中
 afterEvaluate {
@@ -30,16 +30,16 @@ afterEvaluate {
                 if (local) {
                     url = uri('../repo')
                 } else {
-                    url=uri('https://jitpack.io')
-//                    name = "GitHubPackages"
-//                    // 指定要发布到的GitHub Repository仓库url
-//                    url = uri('https://maven.pkg.github.com/wanderJA/GweeService')
-//                    credentials {
-//                        // 用户名和token
-//                        println "--->username:${githubProperties.getProperty("username")},-->token_key:${githubProperties.getProperty("token_key")}"
-//                        username = githubProperties.getProperty("username")
-//                        password = githubProperties.getProperty("token_key")
-//                    }
+//                    url=uri('https://jitpack.io')
+                    name = "GitHubPackages"
+                    // 指定要发布到的GitHub Repository仓库url
+                    url = uri('https://maven.pkg.github.com/wanderJA/GweeService')
+                    credentials {
+                        // 用户名和token
+                        println "--->username:${githubProperties.getProperty("username")},-->token_key:${githubProperties.getProperty("token_key")}"
+                        username = githubProperties.getProperty("username")
+                        password = githubProperties.getProperty("token_key")
+                    }
                 }
 
             }
